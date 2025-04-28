@@ -19,4 +19,3 @@ Config.EnableVersionCheck = true    -- Set to "false" to disable version checkin
 -- Documantation: EN https://tentypeeek.gitbook.io/undv/script/radar-and-ammo | CZ https://tentypeeek.gitbook.io/undv/cz/script/tpk-radar-and-ammo
                                                                                 
 Config.VersionCheckURL = "https://raw.githubusercontent.com/TenTypeeek/TPK-radarammo/main/version.txt"
-Config.Version = "1.0.0"

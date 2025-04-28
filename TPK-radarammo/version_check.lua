@@ -5,24 +5,31 @@
 -- |____/ \___/|_| \_| |_|     |_| \___/ \___/ \____|_| |_|   |_| |_| |_|___|____/ 
 -- Documantation: EN https://tentypeeek.gitbook.io/undv/script/radar-and-ammo | CZ https://tentypeeek.gitbook.io/undv/cz/script/tpk-radar-and-ammo
 
+local resourceName = GetCurrentResourceName()
+local localVersion = GetResourceMetadata(resourceName, 'version', 0)
+
 CreateThread(function()
     Wait(500)
 
-    print("^2Thank you for using TPK Radar & Ammo " .. Config.Version .. "^7")
+    if not localVersion then
+        localVersion = "unknown"
+    end
+
+    print("^2Thank you for using TPK Radar & Ammo " .. localVersion .. "^7")
 
     if Config.EnableVersionCheck then
         PerformHttpRequest(Config.VersionCheckURL, function(statusCode, text, headers)
             if statusCode == 200 then
                 local latestVersion = text:gsub("%s+", "")
 
-                if Config.Version ~= latestVersion then
-                    print("^1[TPK Radar & Ammo] A new version is available! Latest version: " .. latestVersion .. " (You are using: " .. Config.Version .. ")^7")
-                    print("^1[TPK Radar & Ammo] Download the latest version here: https://github.com/YourGitHubUsername/YourRepoName^7")
+                if localVersion ~= latestVersion then
+                    print("^1[TPK Radar & Ammo] New version available! Latest: " .. latestVersion .. " (You: " .. localVersion .. ")^7")
+                    print("^1[TPK Radar & Ammo] Download: https://github.com/TenTypeeek/TPK-radarammo^7")
                 else
-                    print("^2[TPK Radar & Ammo] You are using the latest version (" .. Config.Version .. ")^7")
+                    print("^2[TPK Radar & Ammo] You are using the latest version (" .. localVersion .. ")^7")
                 end
             else
-                print("^3[TPK Radar & Ammo] Version check failed! (HTTP status: " .. statusCode .. ")^7")
+                print("^3[TPK Radar & Ammo] Version check failed! (HTTP " .. statusCode .. ")^7")
             end
         end, "GET", "", {})
     end
