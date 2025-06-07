@@ -3,50 +3,41 @@
 -- | | | | | | |  \| | | |     | || | | | | | | |   | |_| |   | | | |_| || |\___ \ 
 -- | |_| | |_| | |\  | | |     | || |_| | |_| | |___|  _  |   | | |  _  || | ___) |
 -- |____/ \___/|_| \_| |_|     |_| \___/ \___/ \____|_| |_|   |_| |_| |_|___|____/ 
--- Documantation: EN https://tentypeeek.gitbook.io/undv/script/radar-and-ammo | CZ https://tentypeeek.gitbook.io/undv/cz/script/tpk-radar-and-ammo
+-- Documentation: EN https://tentypeeek.gitbook.io/undv/script/radar-and-ammo | CZ https://tentypeeek.gitbook.io/undv/cz/script/tpk-radar-and-ammo
 
 CreateThread(function()
     while true do
         Wait(0)
-
         local ped = PlayerPedId()
 
+        -- Hide radar on foot
         if Config.HideRadarOnFoot then
-            if IsPedInAnyVehicle(ped, false) then
-                DisplayRadar(true)
-            else
-                DisplayRadar(false)
-            end
+            DisplayRadar(IsPedInAnyVehicle(ped, false))
         end
 
+        -- Hide weapon ammo HUD
         if Config.HideAmmo then
             DisplayAmmoThisFrame(false)
         end
 
+        -- Hide street/location names
         if Config.HideStreetNames then
             BeginTextCommandDisplayHelp("STRING")
             EndTextCommandDisplayHelp(0, 0, 0, -1)
         end
 
+        -- Hide HUD components
         if Config.HideHealthArmor then
-            HideHudComponentThisFrame(7)
-            HideHudComponentThisFrame(8)
-            HideHudComponentThisFrame(9)
-            HideHudComponentThisFrame(6)
-            HideHudComponentThisFrame(1)
-            HideHudComponentThisFrame(2)
-            HideHudComponentThisFrame(3)
-            HideHudComponentThisFrame(4)
-            HideHudComponentThisFrame(13)
-            HideHudComponentThisFrame(22)
-            HideHudComponentThisFrame(20)
-            HideHudComponentThisFrame(21)
+            local components = {1, 2, 3, 4, 6, 7, 8, 9, 13, 20, 21, 22}
+            for _, id in ipairs(components) do
+                HideHudComponentThisFrame(id)
+            end
         end
 
         if Config.HideCash then
-            HideHudComponentThisFrame(3)
-            HideHudComponentThisFrame(4)
-            HideHudComponentThisFrame(13)
+            for _, id in ipairs({3, 4, 13}) do
+                HideHudComponentThisFrame(id)
+            end
         end
 
         if Config.HideWeaponInfo then
