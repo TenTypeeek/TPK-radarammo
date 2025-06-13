@@ -1,4 +1,4 @@
-![Banner](https://i.imgur.com/vmCPtDP.png)
+![Banner](https://i.imgur.com/v16mtkl.png)
 
 # 🎯 TPK Radar & Ammo
 
